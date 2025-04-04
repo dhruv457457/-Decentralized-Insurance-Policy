@@ -1,27 +1,21 @@
-# Soroban Project
+# Decentralized Asset Leasing Platform
 
-## Project Structure
+## Insurance Title
+Decentralized Asset Leasing Platform
 
-This repository uses the recommended structure for a Soroban project:
-```text
-.
-├── contracts
-│   └── hello_world
-│       ├── src
-│       │   ├── lib.rs
-│       │   └── test.rs
-│       └── Cargo.toml
-├── Cargo.toml
-└── README.md
-```
 ### Deployed Contract address
 ```text 
 CBO6CK6HOPMM2PZKRCJTTNAPSLHWUZUJLFPNRZV3SUWXJ2JB4IM6ON37
-```
+ ```
+## Insurance Description
+A dApp for leasing physical or digital assets on the Stellar blockchain. Asset owners can lease out items in exchange for Lumens (XLM), while smart contracts handle lease terms, payments, and automatic returns.
 
+## Insurance Vision
+The vision of the Decentralized Asset Leasing Platform is to create a trustless, efficient, and globally accessible marketplace for leasing assets. By leveraging the Stellar blockchain and Soroban smart contracts, we aim to eliminate intermediaries, reduce costs, and empower individuals to monetize their assets—whether physical (e.g., equipment, real estate) or digital (e.g., NFTs, software licenses)—while ensuring secure and transparent transactions.
 
-
-- New Soroban contracts can be put in `contracts`, each in their own directory. There is already a `hello_world` contract in there to get you started.
-- If you initialized this project with any other example contracts via `--with-example`, those contracts will be in the `contracts` directory as well.
-- Contracts should have their own `Cargo.toml` files that rely on the top-level `Cargo.toml` workspace for their dependencies.
-- Frontend libraries can be added to the top-level directory as well. If you initialized this project with a frontend template via `--frontend-template` you will have those files already included.
+## Key Features
+- **Asset Listing**: Owners can list assets for lease with customizable terms (price per day, duration).
+- **Automated Leasing**: Lessees pay XLM to lease assets, with smart contracts enforcing terms and handling payments.
+- **Automatic Returns**: Leases end automatically when the duration expires, or lessees can return early, updating the asset’s availability.
+- **Transparency**: All lease details and stats (active, completed, total leases) are stored on-chain, viewable by anyone.
+- **Low-Cost Transactions**: Built on Stellar, the platform benefits from near-zero fees and fast settlement times.
