@@ -1,21 +1,21 @@
-# Decentralized Asset Leasing Platform
+# Decentralized Insurance Policy
 
 ## Insurance Title
-Decentralized Asset Leasing Platform
-
-### Deployed Contract address
+Decentralized Insurance Policy
+## Deployed Contract address
 ```text 
 CBO6CK6HOPMM2PZKRCJTTNAPSLHWUZUJLFPNRZV3SUWXJ2JB4IM6ON37
  ```
+
 ## Insurance Description
-A dApp for leasing physical or digital assets on the Stellar blockchain. Asset owners can lease out items in exchange for Lumens (XLM), while smart contracts handle lease terms, payments, and automatic returns.
+A dApp for creating and managing decentralized insurance policies on the Stellar blockchain. Insurers can offer policies in exchange for Lumens (XLM) premiums, while smart contracts handle policy terms, premium payments, and automatic claim payouts.
 
 ## Insurance Vision
-The vision of the Decentralized Asset Leasing Platform is to create a trustless, efficient, and globally accessible marketplace for leasing assets. By leveraging the Stellar blockchain and Soroban smart contracts, we aim to eliminate intermediaries, reduce costs, and empower individuals to monetize their assets—whether physical (e.g., equipment, real estate) or digital (e.g., NFTs, software licenses)—while ensuring secure and transparent transactions.
+The vision of the Decentralized Insurance Policy platform is to revolutionize insurance by making it decentralized, transparent, and accessible worldwide. Built on Stellar with Soroban smart contracts, this platform eliminates traditional intermediaries, reduces costs, and ensures trustless payouts for policyholders, empowering individuals and communities with affordable, reliable coverage.
 
 ## Key Features
-- **Asset Listing**: Owners can list assets for lease with customizable terms (price per day, duration).
-- **Automated Leasing**: Lessees pay XLM to lease assets, with smart contracts enforcing terms and handling payments.
-- **Automatic Returns**: Leases end automatically when the duration expires, or lessees can return early, updating the asset’s availability.
-- **Transparency**: All lease details and stats (active, completed, total leases) are stored on-chain, viewable by anyone.
-- **Low-Cost Transactions**: Built on Stellar, the platform benefits from near-zero fees and fast settlement times.
+- **Policy Creation**: Insurers can create customizable insurance policies with defined premiums, payouts, and durations.
+- **Premium Payments**: Policyholders pay premiums in XLM to activate coverage, managed by smart contracts.
+- **Automated Claims**: Claims are processed automatically (via admin/oracle triggers), ensuring fast payouts without manual intervention.
+- **Transparency**: All policy details and stats (active, claimed, total policies) are stored on-chain, publicly verifiable.
+- **Low-Cost Coverage**: Leveraging Stellar’s near-zero fees, the platform offers affordable insurance options.
