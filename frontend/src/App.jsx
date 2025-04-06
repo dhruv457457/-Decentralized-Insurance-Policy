@@ -1,139 +1,107 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
+  getPublicKey,
   createPolicy,
   purchasePolicy,
   fileClaim,
-  viewInsuranceStats,
-  viewPolicyById,
-  getPublicKey
+  viewInsuranceStats
 } from './lib/stellar';
-import PolicyCard from './components/PolicyCard';
+
+import ConnectButton from './components/ConnectButton';
 
 function App() {
+  const [wallet, setWallet] = useState(null);
   const [status, setStatus] = useState('');
-  const [walletAddress, setWalletAddress] = useState(null);
-  const [policies, setPolicies] = useState([]);
   const [stats, setStats] = useState(null);
 
   const connectWallet = async () => {
     try {
-      const address = await getPublicKey();
-      setWalletAddress(address);
-      setStatus(`✅ Connected wallet: ${address}`);
-      fetchStats();
-    } catch (err) {
-      console.error('❌ Wallet connection error:', err);
-      setWalletAddress(null);
-      setStatus(`❌ Wallet connection failed: ${err.message}`);
-    }
-  };
-  
-
-  const fetchStats = async () => {
-    try {
-      const result = await viewInsuranceStats();
-      setStats(result);
-      setStatus('Fetched insurance stats');
-    } catch (error) {
-      console.error(error);
-      setStatus(`Failed to fetch stats: ${error.message}`);
+      const pub = await getPublicKey();
+      setWallet(pub);
+      setStatus(`✅ Connected wallet: ${pub}`);
+    } catch (e) {
+      console.error(e);
+      setStatus(`❌ Connection error: ${e.message}`);
     }
   };
 
   const handleCreatePolicy = async () => {
     try {
-      const result = await createPolicy(
-        'Crop Insurance',
-        'Protection against crop failure',
-        10000000,
-        500000000,
-        30
+      const res = await createPolicy(
+        "Crop Insurance",
+        "Covers financial loss due to crop failure",
+        10000000,    // Premium in stroops (1 XLM)
+        500000000,   // Payout in stroops (50 XLM)
+        30           // Duration in days
       );
-      setStatus(`Policy created: ${result.hash}`);
-      fetchPolicies(1);
-    } catch (error) {
-      console.error(error);
-      setStatus(`Failed to create policy: ${error.message}`);
+      setStatus(`✅ Policy created: ${res.hash}`);
+    } catch (e) {
+      console.error(e);
+      setStatus(`❌ Create failed: ${e.message}`);
     }
   };
 
-  const handlePurchasePolicy = async (policyId) => {
+  const handleViewStats = async () => {
     try {
-      const result = await purchasePolicy(policyId);
-      setStatus(`Policy ${policyId} purchased: ${result.hash}`);
-      fetchPolicies(policyId);
-    } catch (error) {
-      console.error(error);
-      setStatus(`Failed to purchase policy: ${error.message}`);
-    }
-  };
-
-  const handleFileClaim = async (policyId) => {
-    try {
-      const result = await fileClaim(policyId);
-      setStatus(`Claim filed for policy ${policyId}: ${result.hash}`);
-      fetchPolicies(policyId);
-    } catch (error) {
-      console.error(error);
-      setStatus(`Failed to file claim: ${error.message}`);
-    }
-  };
-
-  const fetchPolicies = async (policyId) => {
-    try {
-      const policy = await viewPolicyById(policyId);
-      const parsedPolicy = {
-        policyId,
-        title: 'Crop Insurance',
-        description: 'Protection against crop failure',
-        premium: 10000000,
-        payout: 500000000,
-        isActive: true,
-        isClaimed: false,
-      };
-      setPolicies([parsedPolicy]);
-    } catch (error) {
-      console.error(error);
-      setStatus(`Failed to fetch policy: ${error.message}`);
+      const result = await viewInsuranceStats();
+      setStats(result);
+      setStatus('✅ Fetched insurance stats');
+    } catch (e) {
+      console.error(e);
+      setStatus(`❌ Stats fetch failed: ${e.message}`);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold text-center mb-6">Decentralized Insurance</h1>
-      <div className="max-w-2xl mx-auto space-y-4">
-        {!walletAddress && (
-          <button
-            onClick={connectWallet}
-            className="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700"
-          >
-            Connect Wallet
-          </button>
-        )}
-        {walletAddress && (
+    <div className="min-h-screen bg-gray-50 p-6 font-sans">
+      <h1 className="text-3xl font-bold text-center text-purple-700 mb-8">🌾 Soroban Insurance dApp</h1>
+
+      <div className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow space-y-4">
+        {!wallet && (
           <>
-            <p className="text-sm text-gray-600">Wallet: {walletAddress}</p>
+            <ConnectButton label="Authorize Freighter Access" isHigher />
             <button
-              onClick={handleCreatePolicy}
-              className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+              onClick={connectWallet}
+              className="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700"
             >
-              Create Policy
+              Connect Wallet
             </button>
           </>
         )}
-        <div className="space-y-2">
-          <h2 className="text-xl font-semibold">Policies</h2>
-          {policies.map((policy) => (
-            <PolicyCard
-              key={policy.policyId}
-              policy={policy}
-              onPurchase={handlePurchasePolicy}
-              onClaim={handleFileClaim}
-            />
-          ))}
+
+        {wallet && (
+          <>
+            <div className="text-center text-sm text-gray-600">
+              Connected as <span className="font-mono text-gray-800">{wallet}</span>
+            </div>
+
+            <button
+              onClick={handleCreatePolicy}
+              className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+            >
+              ➕ Create Insurance Policy
+            </button>
+
+            <button
+              onClick={handleViewStats}
+              className="w-full bg-indigo-500 text-white p-2 rounded hover:bg-indigo-600"
+            >
+              📊 View Insurance Stats
+            </button>
+          </>
+        )}
+
+        <div className="text-center text-sm text-gray-700">
+          {status && <p>Status: {status}</p>}
+          {stats && (
+            <div className="mt-2 text-xs text-left bg-gray-100 p-2 rounded">
+              <strong>Insurance Stats:</strong>
+              <pre className="whitespace-pre-wrap">
+                {JSON.stringify(stats, null, 2)}
+              </pre>
+            </div>
+          )}
         </div>
-        <p className="text-center text-gray-700">Status: {status}</p>
-        {stats && <p>Stats: {JSON.stringify(stats)}</p>}
       </div>
     </div>
   );
